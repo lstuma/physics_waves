@@ -1,0 +1,4 @@
+customtkinter
+matplotlib
+Pillow==6.2.2
+ing_theme_matplotlib
