@@ -23,5 +23,6 @@ Run wavy.py in console (as __main__) using python
 
 ### Generated waves
 ![Generated demo](https://imgur.com/AAULalx.png)
+![grafik](https://user-images.githubusercontent.com/52998857/224370298-322998ec-a22b-4783-a93d-fe1f1537f7be.png)
 #### Slider for time dynamically updates view
 ![Time slider demo](https://imgur.com/L7cHQNr.png)
