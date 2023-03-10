@@ -5,8 +5,9 @@ Create snapshots of a physical system at an arbitrary point in time with as many
 ## Requirements
  * customtkinter
  * matplotlib
+ * Python >= 3.10
 
-## How do I use it???
+## Usage
 Run wavy.py in console using python
 
 ### Editor
