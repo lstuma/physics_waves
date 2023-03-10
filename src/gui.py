@@ -17,10 +17,11 @@ y_start = -10
 y_end = 10
 time = 10
 precision = 2
+colormap = 0
 
 def generate(event=None):
     if len(wave_tracker) >= 1:
-        th = Thread(target=show_waves, args=[wave_tracker, x_start, y_start, x_end, y_end, time, precision])
+        th = Thread(target=show_waves, args=[wave_tracker, x_start, y_start, x_end, y_end, time, precision, colormap])
         th.run()
 
 def set_time(val):
@@ -43,6 +44,10 @@ def set_y_end(val):
 def set_precision(val):
     global precision
     precision = int(val)
+
+def set_colormap(val):
+    global colormap
+    colormap = int(val)
 
 def callcenter(callbacks: list, event=None):
     for callback in callbacks: callback(event)
@@ -123,7 +128,7 @@ def init():
     time_slider = ctk.CTkSlider(sframe, from_=0, to=100, command=callcenter_builder([set_time, sl]))
     time_slider.pack(side='top', fill='x')
     time_slider.set(10)
-    object_tracker.append(miny_slider)
+    object_tracker.append(time_slider)
     time_slider_label = ctk.CTkLabel(sframe, text="Time (s) [10]")
     time_slider_label.pack(side='top', fill='x')
     object_tracker.append(time_slider_label)
@@ -133,10 +138,22 @@ def init():
     precision_slider = ctk.CTkSlider(sframe, from_=1, to=10, command=callcenter_builder([set_precision, sl]))
     precision_slider.pack(side='top', fill='x')
     precision_slider.set(2)
-    object_tracker.append(miny_slider)
+    object_tracker.append(precision_slider)
     precision_slider_label = ctk.CTkLabel(sframe, text="Precision (dots per m) [2]")
     precision_slider_label.pack(side='top', fill='x')
     object_tracker.append(precision_slider_label)
+
+    # colormap
+    global colormaps
+    colormaps = { 0 : 'viridis', 1 : 'jet', 2 : 'seismic', 3 : 'Spectral', 4 : 'coolwarm', 5 : 'gist_rainbow', 6 : 'gnuplot2', 7 : 'turbo', 8 : 'bwr', 9 : 'magma', 10 : 'plasma', 11 : 'cividis', 12 : 'inferno', 13 : 'twilight_shifted'}
+    sl = lambda val: colormap_slider_label.configure(text=f'Colormap [{colormaps[int(val)]}]')
+    colormap_slider = ctk.CTkSlider(sframe, from_=0, to=13, command=callcenter_builder([set_colormap, sl]))
+    colormap_slider.pack(side='top', fill='x')
+    colormap_slider.set(0)
+    object_tracker.append(colormap_slider)
+    colormap_slider_label = ctk.CTkLabel(sframe, text="Colormap [viridis]")
+    colormap_slider_label.pack(side='top', fill='x')
+    object_tracker.append(colormap_slider_label)
 
 
     # Area for configuring waves
