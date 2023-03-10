@@ -8,7 +8,7 @@ Create snapshots of a physical system at an arbitrary point in time with as many
  * Python >= 3.10
 
 ## Usage
-Run wavy.py in console using python
+Run wavy.py in console (as __main__) using python
 
 ### Editor
 ![Editor demo](https://imgur.com/q9aP6xU.png)
