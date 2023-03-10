@@ -12,6 +12,7 @@ mpl.rcParams['axes.labelcolor'] = text_color
 mpl.rcParams['xtick.color'] = text_color
 mpl.rcParams['ytick.color'] = text_color
 mpl.rcParams['axes.edgecolor'] = text_color
+colormaps = [mpl.cm.viridis, mpl.cm.jet, mpl.cm.seismic, mpl.cm.Spectral, mpl.cm.coolwarm, mpl.cm.gist_rainbow, mpl.cm.gnuplot2, mpl.cm.turbo, mpl.cm.bwr, mpl.cm.magma, mpl.cm.plasma, mpl.cm.cividis, mpl.cm.inferno, mpl.cm.twilight_shifted]
 
 class wave:
     def __init__(self, x, y, omega=1, smax=1, phi=0, velocity=1, start_time=0):
@@ -59,7 +60,7 @@ class wave:
         return self.smax*sin(self.omega*(time-distance/self.velocity)+self.phi)
 
 
-def plot_data(ax, matrices, fig=None):
+def plot_data(ax, matrices, fig=None, colormap=0):
     # Clear ax
     ax.clear()
 
@@ -72,7 +73,7 @@ def plot_data(ax, matrices, fig=None):
     Ys = matrix[:, 1]
     Zs = matrix[:, 2]
 
-    ax.tricontourf(Xs, Ys, Zs, 20)
+    ax.tricontourf(Xs, Ys, Zs, 20, norm=mpl.colors.CenteredNorm(), cmap=colormaps[colormap])
 
     if fig:
         fig.canvas.draw()
@@ -87,10 +88,10 @@ def show(matrices, params):
 
     # Plot data on axis
     ax = fig.add_axes([0.15, 0, 0.85, 1])
-    plot_data(ax, matrices)
+    plot_data(ax, matrices, colormap=params[7])
 
     # Add time slider
-    redraw = lambda val: plot_data(ax, np.array([wave.calc(params[1], params[2], params[3], params[4], time_slider.val, params[6]) for wave in params[0]]), fig)
+    redraw = lambda val: plot_data(ax, np.array([wave.calc(params[1], params[2], params[3], params[4], time_slider.val, params[6]) for wave in params[0]]), fig, params[7])
     ax_time = fig.add_axes([0.025, 0.1, 0.02, 0.64])
     time_slider = plt.Slider(
         ax=ax_time,
@@ -109,10 +110,10 @@ def show(matrices, params):
 
     plt.show()
 
-def show_waves(waves, x_start, y_start, x_end, y_end, time, d):
+def show_waves(waves, x_start, y_start, x_end, y_end, time, d, colormap=0):
     if isinstance(waves, wave): waves = [waves]
     matrices = np.array([wave.calc(x_start, y_start, x_end, y_end, time, d) for wave in waves])
-    show(matrices=matrices, params=[waves, x_start, y_start, x_end, y_end, time, d])
+    show(matrices=matrices, params=[waves, x_start, y_start, x_end, y_end, time, d, colormap])
 
 
 def pythagoras(pos1, pos2):
