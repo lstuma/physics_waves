@@ -1,4 +1,4 @@
-# 2D Waves
+# Wavy
 Extremely simplistic 2D Wave simulation
 Create snapshots of a physical system at an arbitrary point in time with as many 2-dimensional waves as you want!
 
